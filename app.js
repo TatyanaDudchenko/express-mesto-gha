@@ -10,10 +10,13 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(routes);
 
-// mongoose.connect('mongodb://localhost:27017/mestodb ', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
+app.use((req, res, next) => {
+  req.user = {
+    _id: '6271547adc67df7bad285983'
+  };
+
+  next();
+});
 
 app.use((req, res, next) => {
   console.log(req.method, req.url);
@@ -33,9 +36,3 @@ async function main() {
 }
 
 main();
-
-// app.listen(PORT, () => {
-//   // Если всё работает, консоль покажет, какой порт приложение слушает
-//   console.log(`Слушаем порт ${PORT}`);
-// });
-
