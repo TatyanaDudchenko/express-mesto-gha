@@ -32,12 +32,13 @@ const getUserByID = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const user = new User(req.body);
+    const { name, about, avatar } = req.body;
+    const user = new User({ name, about, avatar });
     res.status(201).send(await user.save());
   } catch (err) {
     if (err.errors.name.name === "ValidatorError") {
       res.status(400).send({
-        message: "Ошибка в веденных данных",
+        message: "Ошибка в введенных данных",
         err,
       });
     }

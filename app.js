@@ -8,8 +8,6 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(routes);
-
 app.use((req, res, next) => {
   req.user = {
     _id: '6271547adc67df7bad285983'
@@ -17,6 +15,8 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use(routes);
 
 app.use((req, res, next) => {
   console.log(req.method, req.url);
