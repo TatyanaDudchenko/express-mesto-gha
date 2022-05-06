@@ -57,7 +57,7 @@ const updateUser = async (req, res) => {
       { name, about },
       // Передадим объект опций:
       {
-        new: true, // обработчик then получит на вход обновлённую запись
+        new: true, // обработчик получит на вход обновлённую запись
         runValidators: true, // данные будут валидированы перед изменением
         upsert: true, // если пользователь не найден, он будет создан
       }
@@ -77,9 +77,39 @@ const updateUser = async (req, res) => {
   }
 };
 
+const updateAvatar = async (req, res) => {
+  try {
+    const { avatar } = req.body;
+    const updatedAvatar = await User.findByIdAndUpdate(
+      req.user._id,
+      { avatar },
+      // Передадим объект опций:
+      {
+        new: true, // обработчик получит на вход обновлённую запись
+        runValidators: true, // данные будут валидированы перед изменением
+        upsert: true, // если пользователь не найден, он будет создан
+      }
+    );
+    res.status(200).send(updatedAvatar);
+  } catch (err) {
+    if (err.errors.name.name === "ValidatorError") {
+      res.status(400).send({
+        message: "Ошибка в введенных данных",
+        err,
+      });
+    }
+    res.status(500).send({
+      message: "Произошла ошибка в работе сервера",
+      err,
+    });
+  }
+};
+
+
 module.exports = {
   getUsers,
   getUserByID,
   createUser,
   updateUser,
+  updateAvatar,
 };
