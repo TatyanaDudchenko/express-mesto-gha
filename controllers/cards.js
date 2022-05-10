@@ -54,15 +54,15 @@ const deleteCardByID = async (req, res) => {
   }
 };
 
-const likeCard = async (req, res) => {//400,404,500. Добавить 404 — Передан несуществующий _id карточки
+const likeCard = async (req, res) => {
   try {
     const updatedCardLike = await Card.findByIdAndUpdate(
       req.params.cardId,
       { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
       { new: true }
     );
-    if (!likeCard) {
-      const error = new Error("Передан несуществующий _id пользователя при постановке лайка");
+    if (!updatedCardLike) {
+      const error = new Error("Передан несуществующий _id пользователя при постановке лайка"); // 404
       error.statusCode = NOT_FOUND_ERROR_CODE;
       throw error;
     }
