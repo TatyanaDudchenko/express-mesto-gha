@@ -86,22 +86,34 @@ const likeCard = async (req, res) => {
   }
 };
 
-const dislikeCard = async (req, res) => {//400,404,500. Добавить 400 — Переданы некорректные данные при снятии лайка
+const dislikeCard = async (req, res) => {
   try {
     const updatedCardDislike = await Card.findByIdAndUpdate(
       req.params.cardId,
       { $pull: { likes: req.user._id } }, // убрать _id из массива
       { new: true }
     );
+    if (!updatedCardDislike) {
+      const error = new Error("Передан несуществующий _id пользователя при постановке лайка"); // 404
+      error.statusCode = NOT_FOUND_ERROR_CODE;
+      throw error;
+    }
     res.status(200).send(updatedCardDislike);
   } catch (err) {
-    if (err.kind === "ObjectId") {
-      res.status(NOT_FOUND_ERROR_CODE).send({
-        message: "Передан несуществующий _id карточки" // 404
+    if (err.name === "CastError") {
+      res.status(BAD_REQUEST_ERROR_CODE).send({
+        message: "Передан некорректный _id пользователя при постановке лайка" // 400
       });
+      return;
+    }
+    if (err.statusCode === NOT_FOUND_ERROR_CODE) {
+      res.status(NOT_FOUND_ERROR_CODE).send({
+        message: "Передан несуществующий _id карточки при постановке лайка" // 404
+      });
+      return;
     }
     res.status(SERVER_ERROR_CODE).send({
-      message: "На сервере произошла ошибка"
+      message: "На сервере произошла ошибка" // 500
     });
   }
 };
