@@ -41,12 +41,18 @@ const createCard = async (req, res) => {
 const deleteCardByID = async (req, res) => {
   try {
     const cardById = Card.findById(req.params.cardId);
+    if (!cardById) {
+      const error = new Error("Карточка с указанным _id не найдена"); // 404
+      error.statusCode = NOT_FOUND_ERROR_CODE;
+      throw error;
+    }
     res.status(200).send(await cardById.deleteOne());
   } catch (err) {
-    if (err.kind === "ObjectId") {
-      res.status(NOT_FOUND_ERROR_CODE).send({
-        message: "Карточка с указанным _id не найдена" // 404
+    if (err.name === "CastError") {
+      res.status(BAD_REQUEST_ERROR_CODE).send({
+        message: "Передан некорректный _id карточки" // 400
       });
+      return;
     }
     res.status(SERVER_ERROR_CODE).send({
       message: "На сервере произошла ошибка" // 500
