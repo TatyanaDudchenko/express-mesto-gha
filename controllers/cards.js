@@ -61,16 +61,11 @@ const likeCard = async (req, res) => {
       { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
       { new: true }
     );
-    if (!updatedCardLike) {
-      const error = new Error("Передан несуществующий _id пользователя при постановке лайка"); // 404
-      error.statusCode = NOT_FOUND_ERROR_CODE;
-      throw error;
-    }
     res.status(200).send(updatedCardLike);
   } catch (err) {
     if (err.name === "CastError") {
       res.status(BAD_REQUEST_ERROR_CODE).send({
-        message: "Передан некорректный _id пользователя при постановке лайка" // 400
+        message: "Передан некорректный _id карточки при постановке лайка" // 400
       });
       return;
     }
@@ -93,22 +88,17 @@ const dislikeCard = async (req, res) => {
       { $pull: { likes: req.user._id } }, // убрать _id из массива
       { new: true }
     );
-    if (!updatedCardDislike) {
-      const error = new Error("Передан несуществующий _id пользователя при постановке лайка"); // 404
-      error.statusCode = NOT_FOUND_ERROR_CODE;
-      throw error;
-    }
     res.status(200).send(updatedCardDislike);
   } catch (err) {
     if (err.name === "CastError") {
       res.status(BAD_REQUEST_ERROR_CODE).send({
-        message: "Передан некорректный _id пользователя при постановке лайка" // 400
+        message: "Передан некорректный _id карточки при снятии лайка" // 400
       });
       return;
     }
     if (err.statusCode === NOT_FOUND_ERROR_CODE) {
       res.status(NOT_FOUND_ERROR_CODE).send({
-        message: "Передан несуществующий _id карточки при постановке лайка" // 404
+        message: "Передан несуществующий _id карточки при снятии лайка" // 404
       });
       return;
     }
