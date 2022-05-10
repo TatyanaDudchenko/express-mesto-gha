@@ -54,6 +54,12 @@ const deleteCardByID = async (req, res) => {
       });
       return;
     }
+    if (err.statusCode === NOT_FOUND_ERROR_CODE) {
+      res.status(NOT_FOUND_ERROR_CODE).send({
+        message: "Карточка с указанным _id не найдена" // 404
+      });
+      return;
+    }
     res.status(SERVER_ERROR_CODE).send({
       message: "На сервере произошла ошибка" // 500
     });
