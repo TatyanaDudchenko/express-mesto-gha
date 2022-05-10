@@ -74,6 +74,12 @@ const likeCard = async (req, res) => {
       });
       return;
     }
+    if (err.statusCode === NOT_FOUND_ERROR_CODE) {
+      res.status(NOT_FOUND_ERROR_CODE).send({
+        message: "Передан несуществующий _id карточки при постановке лайка" // 404
+      });
+      return;
+    }
     res.status(SERVER_ERROR_CODE).send({
       message: "На сервере произошла ошибка" // 500
     });
@@ -97,6 +103,12 @@ const dislikeCard = async (req, res) => {
     if (err.name === "CastError") {
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: "Передан некорректный _id карточки при снятии лайка" // 400
+      });
+      return;
+    }
+    if (err.statusCode === NOT_FOUND_ERROR_CODE) {
+      res.status(NOT_FOUND_ERROR_CODE).send({
+        message: "Передан несуществующий _id карточки при снятии лайка" // 404
       });
       return;
     }
