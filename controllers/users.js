@@ -4,11 +4,16 @@ const BAD_REQUEST_ERROR_CODE = 400;
 const NOT_FOUND_ERROR_CODE = 404;
 const SERVER_ERROR_CODE = 500;
 
-const getUsers = async (req, res) => {//400,500. Добавить 400 — Переданы некорректные данные при поиске пользователей
+const getUsers = async (req, res) => {
   try {
     const users = await User.find({});
     res.status(200).send(users);
   } catch (err) {
+    if (err.name === "ValidationError") {
+      res.status(BAD_REQUEST_ERROR_CODE).send({
+        message: "Переданы некорректные данные при получении списка пользователей" // 400
+      });
+    }
     res.status(SERVER_ERROR_CODE).send({
       message: "На сервере произошла ошибка" // 500
     });
