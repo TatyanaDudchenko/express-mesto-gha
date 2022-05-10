@@ -63,7 +63,7 @@ const updateUser = async (req, res) => {//400,404,500. Добавить 404 — 
     );
     res.status(200).send(updatedUser);
   } catch (err) {
-    if (err.errors.name.name === "ValidationError") {
+    if (err.name === "ValidationError") {
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: "Переданы некорректные данные при обновлении профиля" // 400
       });
@@ -89,7 +89,7 @@ const updateAvatar = async (req, res) => {//400,404,500 Добавить 404 —
     );
     res.status(200).send(updatedAvatar);
   } catch (err) {
-    if (err.errors.name.name === "ValidationError") {
+    if (err.errors.avatar.name === "ValidationError") {
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: "Переданы некорректные данные при обновлении аватара" // 400
       });
