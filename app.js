@@ -23,6 +23,17 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  next(res.status(404).json({ message: "Страница не найдена" }));
+});
+
+// app.use((req, res, next) => {
+//   const error = new Error("Страница не найдена");
+//   error.statusCode = 404;
+
+//   next(error);
+// });
+
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/mestodb ', {
     useNewUrlParser: true,
@@ -36,3 +47,4 @@ async function main() {
 }
 
 main();
+
