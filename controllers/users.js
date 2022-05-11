@@ -13,6 +13,7 @@ const getUsers = async (req, res) => {
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: "Переданы некорректные данные при получении списка пользователей" // 400
       });
+      return;
     }
     res.status(SERVER_ERROR_CODE).send({
       message: "На сервере произошла ошибка" // 500
@@ -58,6 +59,7 @@ const createUser = async (req, res) => {
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: "Переданы некорректные данные при создании пользователя" // 400
       });
+      return;
     }
     res.status(SERVER_ERROR_CODE).send({
       message: "На сервере произошла ошибка" // 500
@@ -84,6 +86,7 @@ const updateUser = async (req, res) => {//400,404,500. Добавить 404 — 
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: "Переданы некорректные данные при обновлении профиля" // 400
       });
+      return;
     }
     res.status(SERVER_ERROR_CODE).send({
       message: "На сервере произошла ошибка" // 500
@@ -110,6 +113,7 @@ const updateAvatar = async (req, res) => {//400,404,500 Добавить 404 —
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: "Переданы некорректные данные при обновлении аватара" // 400
       });
+      return;
     }
     res.status(SERVER_ERROR_CODE).send({
       message: "На сервере произошла ошибка" // 500

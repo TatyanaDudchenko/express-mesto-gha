@@ -13,6 +13,7 @@ const getCards = async (req, res) => {
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: "Переданы некорректные данные при получении списка карточек" // 400
       });
+      return;
     }
     res.status(SERVER_ERROR_CODE).send({
       message: "На сервере произошла ошибка" // 500
@@ -31,6 +32,7 @@ const createCard = async (req, res) => {
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: "Переданы некорректные данные при создании карточки" // 400
       });
+      return;
     }
     res.status(SERVER_ERROR_CODE).send({
       message: "На сервере произошла ошибка" // 500
