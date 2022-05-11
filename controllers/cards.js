@@ -40,7 +40,7 @@ const createCard = async (req, res) => {
 
 const deleteCardByID = async (req, res) => {
   try {
-    const cardById = Card.findById(req.params.cardId);
+    const cardById = await Card.findById(req.params.cardId);
     if (!cardById) {
       const error = new Error("Карточка с указанным _id не найдена"); // 404
       error.statusCode = NOT_FOUND_ERROR_CODE;
