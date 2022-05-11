@@ -11,12 +11,12 @@ const getCards = async (req, res) => {
   } catch (err) {
     if (err.name === "ValidationError") {
       res.status(BAD_REQUEST_ERROR_CODE).send({
-        message: "Переданы некорректные данные при получении списка карточек" // 400
+        message: "Переданы некорректные данные при получении списка карточек", // 400
       });
       return;
     }
     res.status(SERVER_ERROR_CODE).send({
-      message: "На сервере произошла ошибка" // 500
+      message: "На сервере произошла ошибка", // 500
     });
   }
 };
@@ -30,12 +30,12 @@ const createCard = async (req, res) => {
   } catch (err) {
     if (err.name === "ValidationError") {
       res.status(BAD_REQUEST_ERROR_CODE).send({
-        message: "Переданы некорректные данные при создании карточки" // 400
+        message: "Переданы некорректные данные при создании карточки", // 400
       });
       return;
     }
     res.status(SERVER_ERROR_CODE).send({
-      message: "На сервере произошла ошибка" // 500
+      message: "На сервере произошла ошибка", // 500
     });
   }
 };
@@ -52,18 +52,18 @@ const deleteCardByID = async (req, res) => {
   } catch (err) {
     if (err.name === "CastError") {
       res.status(BAD_REQUEST_ERROR_CODE).send({
-        message: "Передан некорректный _id карточки" // 400
+        message: "Передан некорректный _id карточки", // 400
       });
       return;
     }
     if (err.statusCode === NOT_FOUND_ERROR_CODE) {
       res.status(NOT_FOUND_ERROR_CODE).send({
-        message: "Карточка с указанным _id не найдена" // 404
+        message: "Карточка с указанным _id не найдена", // 404
       });
       return;
     }
     res.status(SERVER_ERROR_CODE).send({
-      message: "На сервере произошла ошибка" // 500
+      message: "На сервере произошла ошибка", // 500
     });
   }
 };
@@ -76,7 +76,9 @@ const likeCard = async (req, res) => {
       { new: true }
     );
     if (!updatedCardLike) {
-      const error = new Error("Передан несуществующий _id карточки при постановке лайка"); // 404
+      const error = new Error(
+        "Передан несуществующий _id карточки при постановке лайка"
+      ); // 404
       error.statusCode = NOT_FOUND_ERROR_CODE;
       throw error;
     }
@@ -84,18 +86,18 @@ const likeCard = async (req, res) => {
   } catch (err) {
     if (err.name === "CastError") {
       res.status(BAD_REQUEST_ERROR_CODE).send({
-        message: "Передан некорректный _id карточки при постановке лайка" // 400
+        message: "Передан некорректный _id карточки при постановке лайка", // 400
       });
       return;
     }
     if (err.statusCode === NOT_FOUND_ERROR_CODE) {
       res.status(NOT_FOUND_ERROR_CODE).send({
-        message: "Передан несуществующий _id карточки при постановке лайка" // 404
+        message: "Передан несуществующий _id карточки при постановке лайка", // 404
       });
       return;
     }
     res.status(SERVER_ERROR_CODE).send({
-      message: "На сервере произошла ошибка" // 500
+      message: "На сервере произошла ошибка", // 500
     });
   }
 };
@@ -108,7 +110,9 @@ const dislikeCard = async (req, res) => {
       { new: true }
     );
     if (!updatedCardDislike) {
-      const error = new Error("Передан несуществующий _id карточки при снятии лайка"); // 404
+      const error = new Error(
+        "Передан несуществующий _id карточки при снятии лайка"
+      ); // 404
       error.statusCode = NOT_FOUND_ERROR_CODE;
       throw error;
     }
@@ -116,18 +120,18 @@ const dislikeCard = async (req, res) => {
   } catch (err) {
     if (err.name === "CastError") {
       res.status(BAD_REQUEST_ERROR_CODE).send({
-        message: "Передан некорректный _id карточки при снятии лайка" // 400
+        message: "Передан некорректный _id карточки при снятии лайка", // 400
       });
       return;
     }
     if (err.statusCode === NOT_FOUND_ERROR_CODE) {
       res.status(NOT_FOUND_ERROR_CODE).send({
-        message: "Передан несуществующий _id карточки при снятии лайка" // 404
+        message: "Передан несуществующий _id карточки при снятии лайка", // 404
       });
       return;
     }
     res.status(SERVER_ERROR_CODE).send({
-      message: "На сервере произошла ошибка" // 500
+      message: "На сервере произошла ошибка", // 500
     });
   }
 };
@@ -137,5 +141,5 @@ module.exports = {
   createCard,
   deleteCardByID,
   likeCard,
-  dislikeCard
+  dislikeCard,
 };

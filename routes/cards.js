@@ -1,5 +1,11 @@
-const express = require('express');
-const { getCards, createCard, deleteCardByID, likeCard, dislikeCard } = require('../controllers/cards');
+const express = require("express");
+const {
+  getCards,
+  createCard,
+  deleteCardByID,
+  likeCard,
+  dislikeCard,
+} = require("../controllers/cards");
 const cardsRoutes = express.Router();
 
 cardsRoutes.get("/", getCards);
@@ -9,5 +15,5 @@ cardsRoutes.put("/:cardId/likes", likeCard);
 cardsRoutes.delete("/:cardId/likes", dislikeCard);
 
 module.exports = {
-  cardsRoutes
+  cardsRoutes,
 };

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 // создаем схему
@@ -17,15 +17,17 @@ const cardSchema = new mongoose.Schema({
     type: ObjectId,
     required: true,
   },
-  likes: [{
-    type: ObjectId,
-    default: [],
-  }],
+  likes: [
+    {
+      type: ObjectId,
+      default: [],
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
 
 // создаём модель и экспортируем её
-module.exports = mongoose.model('card', cardSchema);
+module.exports = mongoose.model("card", cardSchema);
