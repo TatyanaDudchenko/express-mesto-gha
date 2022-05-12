@@ -9,12 +9,6 @@ const getCards = async (req, res) => {
     const cards = await Card.find({});
     res.status(200).send(cards);
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      res.status(BAD_REQUEST_ERROR_CODE).send({
-        message: 'Переданы некорректные данные при получении списка карточек', // 400
-      });
-      return;
-    }
     res.status(SERVER_ERROR_CODE).send({
       message: 'На сервере произошла ошибка', // 500
     });

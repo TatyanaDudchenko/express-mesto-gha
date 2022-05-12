@@ -9,13 +9,6 @@ const getUsers = async (req, res) => {
     const users = await User.find({});
     res.status(200).send(users);
   } catch (err) {
-    if (err.name === 'ValidationError') {
-      res.status(BAD_REQUEST_ERROR_CODE).send({
-        message:
-          'Переданы некорректные данные при получении списка пользователей', // 400
-      });
-      return;
-    }
     res.status(SERVER_ERROR_CODE).send({
       message: 'На сервере произошла ошибка', // 500
     });
@@ -79,7 +72,6 @@ const updateUser = async (req, res) => {
       {
         new: true, // обработчик получит на вход обновлённую запись
         runValidators: true, // данные будут валидированы перед изменением
-        upsert: true, // если пользователь не найден, он будет создан
       },
     );
     res.status(200).send(updatedUser);
@@ -107,7 +99,6 @@ const updateAvatar = async (req, res) => {
       {
         new: true, // обработчик получит на вход обновлённую запись
         runValidators: true, // данные будут валидированы перед изменением
-        upsert: true, // если пользователь не найден, он будет создан
       },
     );
     res.status(200).send(updatedAvatar);
