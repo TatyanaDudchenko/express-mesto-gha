@@ -62,7 +62,6 @@ const createUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  // 400,404,500. Добавить 404 — Пользователь с указанным _id не найден
   try {
     const { name, about } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
@@ -89,7 +88,6 @@ const updateUser = async (req, res) => {
 };
 
 const updateAvatar = async (req, res) => {
-  // 400,404,500 Добавить 404 — Пользователь с указанным _id не найден
   try {
     const { avatar } = req.body;
     const updatedAvatar = await User.findByIdAndUpdate(
