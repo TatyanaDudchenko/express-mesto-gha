@@ -1,16 +1,17 @@
-const express = require("express");
+const express = require('express');
+
 const { PORT = 3000 } = process.env;
-const mongoose = require("mongoose");
-const path = require("path");
-const { routes } = require("./routes/app");
+const mongoose = require('mongoose');
+const path = require('path');
+const { routes } = require('./routes/app');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
   req.user = {
-    _id: "6271547adc67df7bad285983",
+    _id: '6271547adc67df7bad285983',
   };
 
   next();
@@ -24,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/mestodb ", {
+  await mongoose.connect('mongodb://localhost:27017/mestodb ', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

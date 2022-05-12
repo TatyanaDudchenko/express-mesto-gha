@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const ObjectId = mongoose.Schema.Types.ObjectId;
+const mongoose = require('mongoose');
+
+const { ObjectId } = mongoose.Schema.Types.ObjectId;
 
 // создаем схему
 const cardSchema = new mongoose.Schema({
@@ -30,4 +31,4 @@ const cardSchema = new mongoose.Schema({
 });
 
 // создаём модель и экспортируем её
-module.exports = mongoose.model("card", cardSchema);
+module.exports = mongoose.model('card', cardSchema);
