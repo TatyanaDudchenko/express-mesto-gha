@@ -75,11 +75,22 @@ const updateUser = async (req, res) => {
         runValidators: true, // данные будут валидированы перед изменением
       },
     );
+    if (!updatedUser) {
+      const error = new Error('Пользователь с указанным _id не найден'); // 404
+      error.statusCode = NOT_FOUND_ERROR_CODE;
+      throw error;
+    }
     res.status(200).send(updatedUser);
   } catch (err) {
     if (err.name === 'ValidationError') {
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: 'Переданы некорректные данные при обновлении профиля', // 400
+      });
+      return;
+    }
+    if (err.statusCode === NOT_FOUND_ERROR_CODE) {
+      res.status(NOT_FOUND_ERROR_CODE).send({
+        message: 'Пользователь с указанным _id не найден', // 404
       });
       return;
     }
@@ -101,11 +112,22 @@ const updateAvatar = async (req, res) => {
         runValidators: true, // данные будут валидированы перед изменением
       },
     );
+    if (!updatedAvatar) {
+      const error = new Error('Пользователь с указанным _id не найден'); // 404
+      error.statusCode = NOT_FOUND_ERROR_CODE;
+      throw error;
+    }
     res.status(200).send(updatedAvatar);
   } catch (err) {
     if (err.errors.avatar.name === 'ValidationError') {
       res.status(BAD_REQUEST_ERROR_CODE).send({
         message: 'Переданы некорректные данные при обновлении аватара', // 400
+      });
+      return;
+    }
+    if (err.statusCode === NOT_FOUND_ERROR_CODE) {
+      res.status(NOT_FOUND_ERROR_CODE).send({
+        message: 'Пользователь с указанным _id не найден', // 404
       });
       return;
     }
