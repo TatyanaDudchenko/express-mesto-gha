@@ -1,8 +1,10 @@
 const Card = require('../models/card');
 
-const BAD_REQUEST_ERROR_CODE = 400;
-const NOT_FOUND_ERROR_CODE = 404;
-const SERVER_ERROR_CODE = 500;
+const {
+  BAD_REQUEST_ERROR_CODE,
+  NOT_FOUND_ERROR_CODE,
+  SERVER_ERROR_CODE,
+} = require('../utils/constants');
 
 const getCards = async (req, res) => {
   try {
