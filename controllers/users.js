@@ -1,4 +1,7 @@
+const bcrypt = require('bcrypt');
 const User = require('../models/user');
+
+const SALT_ROUNDS = 10;
 
 const {
   BAD_REQUEST_ERROR_CODE,
@@ -46,9 +49,18 @@ const getUserByID = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
+  const {
+    name, about, avatar, email, password,
+  } = req.body;
   try {
-    const { name, about, avatar } = req.body;
-    const user = new User({ name, about, avatar });
+    const hash = await bcrypt.hash(password, SALT_ROUNDS);
+    const user = new User({
+      name,
+      about,
+      avatar,
+      email,
+      hash,
+    });
     res.status(201).send(await user.save());
   } catch (err) {
     if (err.name === 'ValidationError') {
