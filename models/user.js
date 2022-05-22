@@ -1,3 +1,4 @@
+const validator = require('validator');
 const mongoose = require('mongoose');
 
 // создаем схему
@@ -15,6 +16,16 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   avatar: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    validate: (v) => validator.isEmail(v),
+  },
+  password: {
     type: String,
     required: true,
   },
