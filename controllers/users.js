@@ -59,7 +59,7 @@ const createUser = async (req, res) => {
       about,
       avatar,
       email,
-      hash,
+      password: hash,
     });
     res.status(201).send(await user.save());
   } catch (err) {
