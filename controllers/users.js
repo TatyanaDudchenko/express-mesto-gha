@@ -167,7 +167,7 @@ const login = async (req, res) => {
     res.status(401).send({ message: 'Неправильные логин или пароль' });
     return;
   }
-  const token = jwt.sign({ id: user._id }, JWT_SECRET);
+  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '7d' });
   res.status(200).send({ token });
 };
 
