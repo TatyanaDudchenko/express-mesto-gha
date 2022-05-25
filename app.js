@@ -6,6 +6,11 @@ const { routes } = require('./routes/app');
 
 const app = express();
 
+const { login, createUser } = require('./controllers/users');
+
+app.post('/signin', express.json(), login);
+app.post('/signup', express.json(), createUser);
+
 app.use((req, res, next) => {
   req.user = {
     _id: '6271547adc67df7bad285983',
