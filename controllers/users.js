@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const SALT_ROUNDS = 10;
+const JWT_SECRET = 'themostclassifiedsecretsecret';
 
 const {
   BAD_REQUEST_ERROR_CODE,
@@ -149,10 +151,31 @@ const updateAvatar = async (req, res) => {
   }
 };
 
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.status(400).send({ message: 'Неправильные логин или пароль' });
+    return;
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    res.status(401).send({ message: 'Неправильные логин или пароль' });
+    return;
+  }
+  const isValidPassword = await bcrypt.compare(password, user.password);
+  if (!isValidPassword) {
+    res.status(401).send({ message: 'Неправильные логин или пароль' });
+    return;
+  }
+  const token = jwt.sign({ id: user._id }, JWT_SECRET);
+  res.status(200).send({ token });
+};
+
 module.exports = {
   getUsers,
   getUserByID,
   createUser,
   updateUser,
   updateAvatar,
+  login,
 };
