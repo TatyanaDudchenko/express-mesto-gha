@@ -1,9 +1,8 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { getToken } = require('../middlewares/auth');
 const User = require('../models/user');
 
 const SALT_ROUNDS = 10;
-const JWT_SECRET = 'themostclassifiedsecretsecret';
 
 const {
   BAD_REQUEST_ERROR_CODE,
@@ -167,7 +166,7 @@ const login = async (req, res) => {
     res.status(401).send({ message: 'Неправильные логин или пароль' });
     return;
   }
-  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+  const token = await getToken(user._id);
   res.status(200).send({ token });
 };
 
