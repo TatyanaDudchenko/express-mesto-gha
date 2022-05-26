@@ -6,14 +6,15 @@ const {
   updateAvatar,
   getUserInfo,
 } = require('../controllers/users');
+const { isAuthtorized } = require('../middlewares/auth');
 
 const usersRoutes = express.Router();
 
-usersRoutes.get('/', getUsers);
-usersRoutes.get('/me', express.json(), getUserInfo);
-usersRoutes.get('/:userId', getUserByID);
-usersRoutes.patch('/me', express.json(), updateUser);
-usersRoutes.patch('/me/avatar', express.json(), updateAvatar);
+usersRoutes.get('/', isAuthtorized, getUsers);
+usersRoutes.get('/me', isAuthtorized, express.json(), getUserInfo);
+usersRoutes.get('/:userId', isAuthtorized, getUserByID);
+usersRoutes.patch('/me', isAuthtorized, express.json(), updateUser);
+usersRoutes.patch('/me/avatar', isAuthtorized, express.json(), updateAvatar);
 
 module.exports = {
   usersRoutes,
