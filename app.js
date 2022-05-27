@@ -11,14 +11,6 @@ const { login, createUser } = require('./controllers/users');
 app.post('/signin', express.json(), login);
 app.post('/signup', express.json(), createUser);
 
-// app.use((req, res, next) => {
-//   req.user = {
-//     _id: '6271547adc67df7bad285983',
-//   };
-
-//   next();
-// });
-
 app.use(routes);
 
 app.use((req, res, next) => {
