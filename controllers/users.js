@@ -80,7 +80,7 @@ const updateUser = async (req, res) => {
   try {
     const { name, about } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
-      req.user._id,
+      req.user.id,
       { name, about },
       // Передадим объект опций:
       {
@@ -117,7 +117,7 @@ const updateAvatar = async (req, res) => {
   try {
     const { avatar } = req.body;
     const updatedAvatar = await User.findByIdAndUpdate(
-      req.user._id,
+      req.user.id,
       { avatar },
       // Передадим объект опций:
       {
