@@ -19,7 +19,7 @@ const getCards = async (req, res) => {
 
 const createCard = async (req, res) => {
   try {
-    const owner = req.user._id;
+    const owner = req.user.id;
     const { name, link } = req.body;
     const card = new Card({ name, link, owner });
     res.status(201).send(await card.save());
