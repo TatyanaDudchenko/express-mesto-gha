@@ -44,6 +44,14 @@ const deleteCardByID = async (req, res) => {
       error.statusCode = NOT_FOUND_ERROR_CODE;
       throw error;
     }
+    // console.log(req.user.id);
+    // console.log(cardById.owner.toString());
+
+    // if (!cardById.owner.toString().equals(req.user.id)) {
+    //   const error = new Error('Нельзя удалить чужую карточку'); // 403
+    //   error.statusCode = 403;
+    //   throw error;
+    // }
     res.status(200).send(await cardById.deleteOne());
   } catch (err) {
     if (err.name === 'CastError') {
@@ -58,6 +66,12 @@ const deleteCardByID = async (req, res) => {
       });
       return;
     }
+    // if (err.statusCode === 403) {
+    //   res.status(403).send({
+    //     message: 'Нельзя удалить чужую карточку', // 403
+    //   });
+    //   return;
+    // }
     res.status(SERVER_ERROR_CODE).send({
       message: 'На сервере произошла ошибка', // 500
     });
