@@ -156,7 +156,7 @@ const login = async (req, res) => {
     res.status(400).send({ message: 'Неправильные логин или пароль' });
     return;
   }
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select('+password');
   if (!user) {
     res.status(401).send({ message: 'Неправильные логин или пароль' });
     return;
