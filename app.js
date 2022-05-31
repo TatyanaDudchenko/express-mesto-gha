@@ -18,6 +18,12 @@ app.use((req, res, next) => {
   next();
 });
 
+// здесь обрабатываем все ошибки
+app.use((err, req, res, next) => {
+  res.status(err.statusCode).send({ message: err.message });
+  next(err);
+});
+
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/mestodb ', {
     useNewUrlParser: true,
