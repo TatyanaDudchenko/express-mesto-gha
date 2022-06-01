@@ -40,7 +40,8 @@ const deleteCardByID = async (req, res, next) => {
       next(new NotFoundError('Карточка с указанным _id не найдена')); // 404
       return;
     }
-    if (!cardById.owner.toString().equals(req.user.id)) {
+    const currentUserId = req.user.id;
+    if (cardById.owner.toString() !== currentUserId) {
       next(new ForbiddenError('Нельзя удалить чужую карточку')); // 403
       return;
     }
