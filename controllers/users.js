@@ -5,6 +5,7 @@ const UnauthorizedError = require('../errors/unauthorized-err');
 const BadRequestError = require('../errors/bad-request-err');
 const NotFoundError = require('../errors/not-found-err');
 const ServerError = require('../errors/server-err');
+const DublicateMongooseError = require('../errors/dublicate-mongoose-err');
 
 const SALT_ROUNDS = 10;
 
@@ -12,6 +13,7 @@ const {
   BAD_REQUEST_ERROR_CODE,
   UNAUTHORIZED_ERROR_CODE,
   NOT_FOUND_ERROR_CODE,
+  DUBLICATE_MONGOOSE_ERROR_CODE,
 } = require('../utils/constants');
 
 const getUsers = async (req, res, next) => {
@@ -61,6 +63,10 @@ const createUser = async (req, res, next) => {
   } catch (err) {
     if (err.name === 'ValidationError') {
       next(new BadRequestError('Переданы некорректные данные при создании пользователя')); // 400
+      return;
+    }
+    if (err.code === DUBLICATE_MONGOOSE_ERROR_CODE) {
+      next(new DublicateMongooseError('Пользователь с таким email уже существует')); // 409
       return;
     }
     next(new ServerError('На сервере произошла ошибка')); // 500
