@@ -59,7 +59,10 @@ const createUser = async (req, res, next) => {
       email,
       password: hash,
     });
-    res.status(201).send(await user.save());
+    const savedUser = await user.save();
+    const { password: removedPassword, ...result } = savedUser.toObject();
+    res.status(201).send(result);
+    // res.status(201).send(await user.save());
   } catch (err) {
     if (err.name === 'ValidationError') {
       next(new BadRequestError('Переданы некорректные данные при создании пользователя')); // 400
