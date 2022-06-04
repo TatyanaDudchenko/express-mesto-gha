@@ -31,12 +31,3 @@ module.exports = {
   getToken,
   isAuthtorized,
 };
-
-// const isAuthtorized = async (token) => {
-//   try {
-//     const decoded = await jwt.verify(token, JWT_SECRET);
-//     return !!decoded;
-//   } catch (err) {
-//     return false;
-//   }
-// };
