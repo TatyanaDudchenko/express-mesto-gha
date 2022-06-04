@@ -2,6 +2,7 @@ const express = require('express');
 
 const { PORT = 3000 } = process.env;
 const mongoose = require('mongoose');
+const { errors } = require('celebrate');
 const { routes } = require('./routes/app');
 
 const app = express();
@@ -17,6 +18,8 @@ app.use((req, res, next) => {
   console.log(req.method, req.url);
   next();
 });
+
+app.use(errors()); // обработчик ошибок celebrate
 
 // здесь обрабатываем все ошибки
 app.use((err, req, res, next) => {
