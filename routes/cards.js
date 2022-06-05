@@ -1,5 +1,4 @@
 const express = require('express');
-const { celebrate, Joi } = require('celebrate');
 const {
   getCards,
   createCard,
@@ -8,6 +7,7 @@ const {
   dislikeCard,
 } = require('../controllers/cards');
 const { isAuthtorized } = require('../middlewares/auth');
+const { validationsCreateCard } = require('../middlewares/validations');
 
 const cardsRoutes = express.Router();
 
@@ -16,11 +16,7 @@ cardsRoutes.post(
   '/',
   isAuthtorized,
   express.json(),
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().required().min(2).max(30),
-    }),
-  }),
+  validationsCreateCard,
   createCard,
 );
 cardsRoutes.delete('/:cardId', isAuthtorized, deleteCardByID);
