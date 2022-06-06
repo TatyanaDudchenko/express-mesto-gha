@@ -18,38 +18,37 @@ const validationsCreateCard = celebrate({
 });
 
 const validationsLogin = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().valid(validateURL),
-  }),
+  headers: Joi.object().keys({
+    // валидируем заголовки
+  }).unknown(true),
 });
 
 const validationsCreateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().valid(validateURL),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().required().valid(validateURL),
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(8),
   }),
 });
 
 const validationsDeleteCardByID = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().valid(validateURL),
-  }),
+  headers: Joi.object().keys({
+    // валидируем заголовки
+  }).unknown(true),
 });
 
 const validationsLikeCard = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().valid(validateURL),
-  }),
+  headers: Joi.object().keys({
+    // валидируем заголовки
+  }).unknown(true),
 });
 
 const validationsDislikeCard = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().valid(validateURL),
-  }),
+  headers: Joi.object().keys({
+    // валидируем заголовки
+  }).unknown(true),
 });
 
 module.exports = {
