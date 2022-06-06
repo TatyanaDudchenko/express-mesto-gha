@@ -7,21 +7,20 @@ const {
   dislikeCard,
 } = require('../controllers/cards');
 const { isAuthtorized } = require('../middlewares/auth');
-const { validationsCreateCard } = require('../middlewares/validations');
+const {
+  validationsCreateCard,
+  validationsDeleteCardByID,
+  validationsLikeCard,
+  validationsDislikeCard,
+} = require('../middlewares/validations');
 
 const cardsRoutes = express.Router();
 
 cardsRoutes.get('/', isAuthtorized, getCards);
-cardsRoutes.post(
-  '/',
-  isAuthtorized,
-  express.json(),
-  validationsCreateCard,
-  createCard,
-);
-cardsRoutes.delete('/:cardId', isAuthtorized, deleteCardByID);
-cardsRoutes.put('/:cardId/likes', isAuthtorized, likeCard);
-cardsRoutes.delete('/:cardId/likes', isAuthtorized, dislikeCard);
+cardsRoutes.post('/', isAuthtorized, express.json(), validationsCreateCard, createCard);
+cardsRoutes.delete('/:cardId', isAuthtorized, validationsDeleteCardByID, deleteCardByID);
+cardsRoutes.put('/:cardId/likes', isAuthtorized, validationsLikeCard, likeCard);
+cardsRoutes.delete('/:cardId/likes', isAuthtorized, validationsDislikeCard, dislikeCard);
 
 module.exports = {
   cardsRoutes,

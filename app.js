@@ -8,9 +8,10 @@ const { routes } = require('./routes/app');
 const app = express();
 
 const { login, createUser } = require('./controllers/users');
+const { validationsLogin, validationsCreateUser } = require('./middlewares/validations');
 
-app.post('/signin', express.json(), login);
-app.post('/signup', express.json(), createUser);
+app.post('/signin', express.json(), validationsLogin, login);
+app.post('/signup', express.json(), validationsCreateUser, createUser);
 
 app.use(routes);
 

@@ -17,6 +17,46 @@ const validationsCreateCard = celebrate({
   }),
 });
 
+const validationsLogin = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().valid(validateURL),
+  }),
+});
+
+const validationsCreateUser = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().valid(validateURL),
+  }),
+});
+
+const validationsDeleteCardByID = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().valid(validateURL),
+  }),
+});
+
+const validationsLikeCard = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().valid(validateURL),
+  }),
+});
+
+const validationsDislikeCard = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().valid(validateURL),
+  }),
+});
+
 module.exports = {
   validationsCreateCard,
+  validationsLogin,
+  validationsCreateUser,
+  validationsDeleteCardByID,
+  validationsLikeCard,
+  validationsDislikeCard,
 };
