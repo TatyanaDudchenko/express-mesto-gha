@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const AuthorizationError = require('../errors/authorization-err');
 
 const JWT_SECRET = 'themostclassifiedsecretsecret';
 
@@ -8,7 +9,7 @@ const isAuthtorized = async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    res.status(401).send({ message: 'Необходима авторизация' });
+    next(new AuthorizationError('Необходима авторизация')); // 401
     return;
   }
 
@@ -18,7 +19,7 @@ const isAuthtorized = async (req, res, next) => {
   try {
     payload = await jwt.verify(token, JWT_SECRET);
   } catch (err) {
-    res.status(401).send({ message: 'Необходима авторизация' });
+    next(new AuthorizationError('Необходима авторизация')); // 401
     return;
   }
 
