@@ -123,7 +123,7 @@ const updateAvatar = async (req, res, next) => {
     }
     res.status(200).send(updatedAvatar);
   } catch (err) {
-    if (err.errors.avatar.name === 'ValidationError') {
+    if (err.name === 'ValidationError') {
       next(new BadRequestError('Переданы некорректные данные при обновлении аватара')); // 400
       return;
     }
@@ -168,9 +168,9 @@ const login = async (req, res, next) => {
 };
 
 const getUserInfo = async (req, res, next) => {
-  const { _id } = req.body;
+  const { id } = req.user.id;
   try {
-    const userById = await User.findById({ _id });
+    const userById = await User.findById(id);
     if (!userById) {
       next(new NotFoundError('Пользователь с указанным _id не найден')); // 404
       return;
