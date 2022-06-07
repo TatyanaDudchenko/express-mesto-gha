@@ -26,9 +26,9 @@ const validationsLogin = celebrate({
 
 const validationsCreateUser = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required(false).min(2).max(30),
-    about: Joi.string().required(false).min(2).max(30),
-    avatar: Joi.string().required(false).custom(validateURL),
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().custom(validateURL),
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
@@ -75,13 +75,6 @@ const validationsUpdateAvatar = celebrate({
   }),
 });
 
-const validationsGetUserInfo = celebrate({
-  // валидируем параметры
-  params: Joi.object().keys({
-    me: Joi.string().length(24).hex().required(),
-  }),
-});
-
 module.exports = {
   validationsCreateCard,
   validationsLogin,
@@ -92,5 +85,4 @@ module.exports = {
   validationsGetUserByID,
   validationsUpdateUser,
   validationsUpdateAvatar,
-  validationsGetUserInfo,
 };

@@ -11,13 +11,12 @@ const {
   validationsGetUserByID,
   validationsUpdateUser,
   validationsUpdateAvatar,
-  validationsGetUserInfo,
 } = require('../middlewares/validations');
 
 const usersRoutes = express.Router();
 
 usersRoutes.get('/', isAuthtorized, getUsers);
-usersRoutes.get('/me', isAuthtorized, validationsGetUserInfo, getUserInfo);
+usersRoutes.get('/me', isAuthtorized, getUserInfo);
 usersRoutes.get('/:userId', isAuthtorized, validationsGetUserByID, getUserByID);
 usersRoutes.patch('/me', isAuthtorized, express.json(), validationsUpdateUser, updateUser);
 usersRoutes.patch(
