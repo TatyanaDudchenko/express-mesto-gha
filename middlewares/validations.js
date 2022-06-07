@@ -55,6 +55,33 @@ const validationsDislikeCard = celebrate({
   }),
 });
 
+const validationsGetUserByID = celebrate({
+  // валидируем параметры
+  params: Joi.object().keys({
+    userId: Joi.string().length(24).hex().required(),
+  }),
+});
+
+const validationsUpdateUser = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+  }),
+});
+
+const validationsUpdateAvatar = celebrate({
+  body: Joi.object().keys({
+    avatar: Joi.string().required().custom(validateURL),
+  }),
+});
+
+const validationsGetUserInfo = celebrate({
+  // валидируем параметры
+  params: Joi.object().keys({
+    me: Joi.string().length(24).hex().required(),
+  }),
+});
+
 module.exports = {
   validationsCreateCard,
   validationsLogin,
@@ -62,4 +89,8 @@ module.exports = {
   validationsDeleteCardByID,
   validationsLikeCard,
   validationsDislikeCard,
+  validationsGetUserByID,
+  validationsUpdateUser,
+  validationsUpdateAvatar,
+  validationsGetUserInfo,
 };
