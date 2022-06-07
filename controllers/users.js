@@ -168,7 +168,7 @@ const login = async (req, res, next) => {
 };
 
 const getUserInfo = async (req, res, next) => {
-  const { id } = req.user.id;
+  const { id } = req.user;
   try {
     const userById = await User.findById(id);
     if (!userById) {
