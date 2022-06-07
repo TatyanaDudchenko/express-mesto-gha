@@ -6,9 +6,9 @@ const { isAuthtorized } = require('../middlewares/auth');
 
 const routes = express.Router();
 
-routes.use('/users', isAuthtorized, usersRoutes);
-routes.use('/cards', isAuthtorized, cardsRoutes);
-routes.use((req, res, next) => {
+routes.use('/users', usersRoutes);
+routes.use('/cards', cardsRoutes);
+routes.use('/', isAuthtorized, (req, res, next) => {
   next(new NotFoundError('Маршрут не найден')); // 404
 });
 
