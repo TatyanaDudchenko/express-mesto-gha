@@ -10,16 +10,10 @@ const app = express();
 const { login, createUser } = require('./controllers/users');
 const { validationsLogin, validationsCreateUser } = require('./middlewares/validations');
 
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-
-app.use(requestLogger); // подключаем логгер запросов
-
 app.post('/signin', express.json(), validationsLogin, login);
 app.post('/signup', express.json(), validationsCreateUser, createUser);
 
 app.use(routes);
-
-app.use(errorLogger); // подключаем логгер ошибок
 
 app.use(errors()); // обработчик ошибок celebrate
 
